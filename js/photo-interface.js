@@ -59,7 +59,6 @@ $(function(){
         alert("img off should run!!");
         clearImageListeners = setInterval(function(){
             $("img").off();
-            // alert("cleared");
         }, 200);
     };
 
@@ -83,14 +82,20 @@ $(function(){
 var playerWins = function(url, tag){
 $(".winBox").css("background-image", "url("+ url +")");
   score = (15-clicks)* countDown + 100;
+  $('.startButton').show();
+  clearInterval(displayTimer);
+  $("img").off();
+  clearImageListeners = setInterval(function(){
+      $("img").off();
+  }, 200);
+  var playerName;
   setTimeout(function(){
-      var playerName = prompt("You Win! Enter your name:");
+       playerName = prompt("You Win! Enter your name:");
   }, 500);
   var playerResult = {"score":score, "name":playerName};
   winners.push(playerResult);
-  $("img").off();
-  $('.startButton').toggle();
-  clearInterval(displayTimer);
+
+
   //add player name in future
 };
 
