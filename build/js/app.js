@@ -3889,25 +3889,31 @@ $(function(){
   var displayTimer;
 
   var updateScores = function(){
-    alert("update ran");
     $(".scoresList").empty();
     // winners.sort(keysrt('score'));
     winners.forEach(function(score){
-      alert("foreach");
       $('.scoresList').append("<li>"+score.name + " " + score.score+"</li>");
     });
-  }
+};
+
   var displayClicks = function(){
     clicks +=1;
     $("#clicks").text(clicks);
-    if(clicks === 20){
-      alert("game over");
-      clicks = 0;
-      countDown = 120;
-      clearInterval(displayTimer);
-      $('.startButton').toggle();
+    if(clicks === 15){
+      gameOver();
     }
-  };
+};
+
+    var gameOver = function(){
+        setTimeout(function(){
+          alert("game over");
+        }, 500);
+        clicks = 0;
+        countDown = 120;
+        clearInterval(displayTimer);
+        $('.startButton').toggle();
+        $("img").off();
+    };
 
   ////timer functions
   var updateTimer = function(){
@@ -3926,25 +3932,26 @@ $(function(){
 
   };
 
-
 var playerWins = function(url, tag){
 $(".winBox").css("background-image", "url("+ url +")");
-  score = (20-clicks)* countDown;
-  var playerName = prompt("You Win! Enter your name:");
+  score = (15-clicks)* countDown + 100;
+  setTimeout(function(){
+      var playerName = prompt("You Win! Enter your name:");
+  }, 500);
   var playerResult = {"score":score, "name":playerName};
   winners.push(playerResult);
-  console.log(winners);
+  $("img").off();
   $('.startButton').toggle();
-
   //add player name in future
 };
 
 
-var startingWords = ["rodent", "pizza", "tree", "boat", "waterfall", "flower", "sunset", "hamburger", "car", "beautiful", "hillary", "leader", "snail", "math", "mesh", "soccer", "crowd", "proud", "happy", "eggs", "russia"];
+var startingWords = ["rodent", "nature", "bird", "beach", "pizza", "tree", "boat", "waterfall", "flower", "sunset", "hamburger", "car", "beautiful", "hillary", "leader", "snail", "math", "mesh", "soccer", "crowd", "proud", "happy", "egg", "russia"];
 
   $(".startButton").click(function(){
     start();
     $('.startButton').toggle();
+    $(".winBox").css("background-image", "url('')");
     var random1 = Math.floor(Math.random() * (startingWords.length ));
     var random2 = Math.floor(Math.random() * (startingWords.length));
     var startTag = startingWords[random1];
@@ -3955,7 +3962,6 @@ var startingWords = ["rodent", "pizza", "tree", "boat", "waterfall", "flower", "
     destination = endTag;
     console.log(random1 +" "+ random2 + startTag + endTag);
     $(".endTag").text('->'+ endTag);
-
 
     var URL = "https://pixabay.com/api/?key="+API_KEY+"&q="+encodeURIComponent(startTag);
     $.getJSON(URL, function(data){
@@ -4005,7 +4011,7 @@ var startingWords = ["rodent", "pizza", "tree", "boat", "waterfall", "flower", "
       if (parseInt(data.totalHits) > 0){
         $.each(data.hits, function(i, hit){
           console.log(hit);
-          $(".resultImages").append("<a><img class='resultImage' src='"+hit.previewURL+"'>");
+          $(".resultImages").append("<img class='resultImage' src='"+hit.previewURL+"'>");
           var scrollDown = function(){
             $("div.resultImages").scrollTop(90000);
           };
