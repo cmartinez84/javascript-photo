@@ -3961,6 +3961,7 @@ var startingWords = ["rodent", "rain", "nature", "bird", "beach", "pizza", "boat
 
   $(".startButton").click(function(){
     start();
+    $("#instructions").hide();
     $('.startButton').toggle();
     $(".winBox").css("background-image", "url('')");
     var random1 = Math.floor(Math.random() * (startingWords.length ));
@@ -3974,7 +3975,7 @@ var startingWords = ["rodent", "rain", "nature", "bird", "beach", "pizza", "boat
     console.log(random1 +" "+ random2 + startTag + endTag);
     $(".endTag").text('->'+ endTag);
 
-    var URL = "https://pixabay.com/api/?key="+API_KEY+"&q="+encodeURIComponent(startTag);
+    var URL = "https://pixabay.com/api/?key="+API_KEY+"&q="+encodeURIComponent(startTag );
     $.getJSON(URL, function(data){
       var testVar = data.hits[0].webformatURL;
       console.log(testVar);

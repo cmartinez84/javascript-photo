@@ -8,7 +8,9 @@ body {
 .container{
   margin-top: 100px
 }
-
+#instructions{
+    font-size: 1.2em;
+}
 .navbar{
   position: fixed;
   width: 100%;
