@@ -30,6 +30,7 @@ $(function(){
   var clicks = 0;
   var countDown = 120;
   var displayTimer;
+  var clearImageListeners;
 
   var updateScores = function(){
     $(".scoresList").empty();
@@ -55,13 +56,17 @@ $(function(){
         countDown = 120;
         clearInterval(displayTimer);
         $('.startButton').toggle();
-        $("img").off();
+        alert("img off should run!!");
+        clearImageListeners = setInterval(function(){
+            $("img").off();
+            // alert("cleared");
+        }, 200);
     };
 
   ////timer functions
   var updateTimer = function(){
     if(countDown === 0){
-      clearInterval(displayTimer);
+        gameOver();
     }
     else{
       countDown -= 1;
@@ -72,7 +77,7 @@ $(function(){
     displayTimer = setInterval(updateTimer, 1000);
     $(".pathBox").empty();
     $(".resultImages").empty();
-
+    clearInterval(clearImageListeners);
   };
 
 var playerWins = function(url, tag){
@@ -85,11 +90,12 @@ $(".winBox").css("background-image", "url("+ url +")");
   winners.push(playerResult);
   $("img").off();
   $('.startButton').toggle();
+  clearInterval(displayTimer);
   //add player name in future
 };
 
 
-var startingWords = ["rodent", "nature", "bird", "beach", "pizza", "tree", "boat", "waterfall", "flower", "sunset", "hamburger", "car", "beautiful", "hillary", "leader", "snail", "math", "mesh", "soccer", "crowd", "proud", "happy", "egg", "russia"];
+var startingWords = ["rodent", "rain", "nature", "bird", "beach", "pizza", "boat", "waterfall", "flower", "sunset", "hamburger", "car", "beautiful", "snail", "math", "soccer", "crowd", "proud", "happy", "egg", "christmas", "pumpkin", "spaghetti", "clown", "lamp", "maple", "tree", "fashion", "futuristic"];
 
   $(".startButton").click(function(){
     start();
